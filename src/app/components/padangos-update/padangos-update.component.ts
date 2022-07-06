@@ -15,6 +15,8 @@ export class PadangosUpdateComponent implements OnInit {
   public diameter:number=16;
   public quantity:number=0;
 
+  public prideti:number=0;
+
   constructor(
     private padangosService:PadangosService,
     private route:ActivatedRoute,
@@ -33,6 +35,13 @@ export class PadangosUpdateComponent implements OnInit {
 
   public updatePadanga(){
     let padanga=new Padanga(this.mark,this.diameter,this.quantity,this.id);
+    this.padangosService.updatePadanga(padanga).subscribe(()=>{
+      this.router.navigate(["/"]);
+    })
+  }
+
+  public pridetiKieki(){
+    let padanga=new Padanga(this.mark,this.diameter,this.quantity+this.prideti,this.id);
     this.padangosService.updatePadanga(padanga).subscribe(()=>{
       this.router.navigate(["/"]);
     })

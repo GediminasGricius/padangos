@@ -10,12 +10,20 @@ import { PadangosService } from 'src/app/services/padangos.service';
 export class PadangosListComponent implements OnInit {
 
   public padangos:Padanga[]=[];
+  public visoPadangu:number=0;
+  public visoTipu:number=0;
 
   constructor(private padangosService:PadangosService) { }
 
   private uzkrautiPadangas(){
     this.padangosService.getPadangos().subscribe((response)=>{
       this.padangos=response;
+      this.visoPadangu=0;
+      this.visoTipu=0;
+      this.padangos.forEach((padanga)=>{
+        this.visoPadangu+=padanga.quantity;
+        this.visoTipu++;
+      })
     })
   }
 
@@ -24,7 +32,7 @@ export class PadangosListComponent implements OnInit {
   }
 
   public deletePadanga(id:string|undefined){
-    if (id!=null){
+    if (id!==undefined){
       this.padangosService.deletePadanga(id).subscribe(()=>{
         this.uzkrautiPadangas();
       });
